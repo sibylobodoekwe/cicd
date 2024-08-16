@@ -40,4 +40,4 @@ jobs:
           context: .
           file: Dockerfile
           push: true
-          tags: sibylobodoekwe/cicd:latest
+          tags: sibylobodoekwe/githubcicd:latest
