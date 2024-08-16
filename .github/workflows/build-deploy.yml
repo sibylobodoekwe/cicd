@@ -1,0 +1,20 @@
+name: test-and-deploy
+
+on:
+    push:
+
+jobs:
+    test:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            - name: Setup Python
+              uses: actions/setup-python@v4
+              with:
+                python-version: "3.11"
+             - name: Install dependencies
+               run: |
+                python -m pip install --upgrade pip
+                pip install -r requirements-dev.txt
+             - name: Test with pytest   
+              run: python -m pytest ./tests
