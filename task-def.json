@@ -1,0 +1,19 @@
+{
+  "family": "myapp-task",
+  "executionRoleArn": "arn:aws:iam::084828596058:role/ecsTaskExecutionRole",
+  "containerDefinitions": [
+    {
+      "name": "myapp",
+      "image": "084828596058.dkr.ecr.us-west-2.amazonaws.com/myapp:latest",
+      "memory": 512,
+      "cpu": 256,
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 80,
+          "hostPort": 80
+        }
+      ]
+    }
+  ]
+}

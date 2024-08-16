@@ -2,6 +2,8 @@ name: test-and-deploy
 
 on:
   push:
+    branches:
+      - main
 
 jobs:
   test:
@@ -34,10 +36,13 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Build and push
+      - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
           push: true
           context: .
           file: Dockerfile
           tags: sibbyy/myapp:latest
+          platforms: linux/amd64,linux/arm64
+
+
