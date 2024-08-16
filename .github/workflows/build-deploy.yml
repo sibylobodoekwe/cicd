@@ -55,6 +55,7 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-west-2 
+                
 
       - name: Deploy to AWS App Runner
         run: |
@@ -63,7 +64,7 @@ jobs:
             --source-configuration '{
               "ImageRepository": {
                 "ImageIdentifier": "sibbyy/myapp:latest",
-                "ImageRepositoryType": "DOCKERHUB" 
+                "ImageRepositoryType": "ECR_PUBLIC" 
               }
             }' \
             --instance-configuration '{
