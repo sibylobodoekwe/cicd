@@ -6,7 +6,18 @@
         "Principal": {
           "Service": "ecs-tasks.amazonaws.com"
         },
-        "Action": "sts:AssumeRole"
+        "Action": "sts:AssumeRole",
+        "Resource": "*"
+      },
+      {
+        "Effect": "Allow",
+        "Action": [
+          "apprunner:CreateService",
+          "apprunner:UpdateService",
+          "apprunner:DeleteService",
+          "apprunner:DescribeService"
+        ],
+        "Resource": "*"
       }
     ]
   }
