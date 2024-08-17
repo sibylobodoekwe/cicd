@@ -60,7 +60,8 @@ jobs:
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           script: |
             docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+            docker stop myapp || true
+            docker rm myapp || true
             docker pull sibbyy/myapp:latest
             docker run -d --name myapp -p 80:80 sibbyy/myapp:latest
 
-            
