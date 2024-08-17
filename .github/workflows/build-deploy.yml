@@ -54,14 +54,14 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: 'us-west-2'  # Replace with your desired region
+          aws-region: 'us-west-2' 
 
       - name: Create App Runner service
         run: |
           aws apprunner create-service \
-            --name my-container-app \
+            --service-name my-container-app \
+            --source-configuration ImageRepository={ImageIdentifier=sibbyy/myapp:latest,ImageRepositoryType=ECR} \
             --instance-configuration "InstanceType=t2.micro,InstanceRole=ecsInstanceRole" \
-            --port 80 \
             --platform "Linux/64" \
-            --region us-west-2  # Replace with your desired region
+            --region us-west-2  
             --image sibbyy/myapp:latest
