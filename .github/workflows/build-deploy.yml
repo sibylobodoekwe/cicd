@@ -45,23 +45,20 @@ jobs:
           tags: sibbyy/myapp:latest
           platforms: linux/amd64,linux/arm64
 
-  deploy-aws:
+  deploy:
     needs: docker
     runs-on: ubuntu-latest
     steps:
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v3
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: 'us-west-2' 
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - name: Create App Runner service
-        run: |
-          aws apprunner create-service \
-            --service-name my-container-app \
-            --source-configuration ImageRepository={ImageIdentifier=sibbyy/myapp:latest,ImageRepositoryType=ECR} \
-            --instance-configuration "InstanceType=t2.micro,InstanceRole=ecsInstanceRole" \
-            --platform "Linux/64" \
-            --region us-west-2  
-            --image sibbyy/myapp:latest
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          script: |
+            docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+            docker pull sibbyy/myapp:latest
+            docker run -d --name myapp -p 80:80 sibbyy/myapp:latest
