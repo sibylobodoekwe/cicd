@@ -45,7 +45,7 @@ jobs:
           tags: sibbyy/myapp:latest
           platforms: linux/amd64,linux/arm64
 
-  deploy:
+  deploy-aws:
     needs: docker
     runs-on: ubuntu-latest
     steps:
@@ -63,8 +63,8 @@ jobs:
             --service-name my-container-app \
             --source-configuration '{
               "ImageRepository": {
-                "ImageIdentifier": "sibbyy/myapp:latest",
-                "ImageRepositoryType": "ECR_PUBLIC" 
+                "ImageIdentifier": "084828596058.dkr.ecr.us-west-2.amazonaws.com/myapp:latest",
+                "ImageRepositoryType": "ECR" 
               }
             }' \
             --instance-configuration '{
